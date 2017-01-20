@@ -7,6 +7,8 @@ version.
 This does mean that the relations between things are not immediately
 human-readable by looking at the repo. I think there is tension between having
 a simple + flexible directory structure and having human-readable content.
+We would need people to run a tool to group things, or we could make it run
+automatically with a git hook and output the result.
 
 doing things this way means issues can just be in an 'issues' dir of the main
 repo. we could then configure who can *edit* the different things in it by
