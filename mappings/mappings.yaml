@@ -1,19 +1,19 @@
 # This way we could link the same task to multiple stories if wanted,
-# and vice versa. same for worklists. These could start with intents
+# and vice versa. same for intents. These could start with intents
 # and move 'down' to stories; I'm just used to it going this way;
-# the story is 'in the middle' so we put it first.
+# the requirement is 'in the middle' so we put it first.
 
-story_01:
+requirement_01:
     - task:
         - "01"
         - "02"
-    - worklist:
+    - intent:
         - "01"
-story_02:
+requirement_02:
     - task:
         - "03"
-    - worklist:
+    - intent:
         - "02"
-story_03:
+requirement_03:
     - task:
         - "04"
