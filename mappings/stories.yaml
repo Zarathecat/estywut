@@ -1,0 +1,19 @@
+# This way we could link the same task to multiple stories if wanted,
+# and vice versa. same for worklists. These could start with intents
+# and move 'down' to stories; I'm just used to it going this way;
+# the story is 'in the middle' so we put it first.
+
+story_01:
+    - tasks:
+        - 01
+        - 02
+    - worklists:
+        - 01
+story_02:
+    - tasks:
+        - 03
+    - worklists:
+        - 02
+story_03:
+    - tasks:
+        - 04

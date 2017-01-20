@@ -1,0 +1,50 @@
+A proof-of-concept/experiment re: issue tracking within a git repo.
+
+We currently give things both 'id' in the name and an 'id' field.
+they might not need the id field if the id is in the name. it's probably
+better to have it in the name to avoid merge conflicts.
+
+Similarly, we determine what type of thing a thing is by putting it in
+a directory for that thing, but we also include that in the filename.
+maybe we don't need both.
+
+I've used StoryBoard's naming for things because it's a mapping I'm very
+familiar with. For now, please read:
+
+worklists -> Intents (sometimes known as 'epics')
+stories -> Requirements (smaller goals)
+tasks -> task (specific work to meet goal)
+
+Historically, stories are used as bug-reports or feature requests,
+and so convey a small goal ('fix bug foo', 'support for x');
+
+worklists are used to group stories (goals) and/or tasks that fulfil the same,
+bigger goal (they are flexible and can be used for other things, but that's the
+bit that's relevant to us here);
+
+tasks are some concrete unit of work, generally a specific code change to some
+repo;
+
+
+
+projects (not used in our current mapping) are affected git repos, so roughly
+mean 'area of the codebase organised around some purpose'. They are associated
+with *tasks*, not with stories. Our setup currently only assumes one project
+(the repo in which the tracking information lives), which is why these are
+unused here.
+
+project groups (not used again) group different git repos relating to the same tool, eg: [bugtracker api, web interface for bugtracker, console interface for bugtracker, config scripts for bugtracker]. they don't do anything interesting;
+it's just for ease of browsing.
+
+boards (also unused) allow one to group worklists according to the same
+ meta goal, and move stories and tasks between worklists.
+
+The storyboard mapping goes:
+
+many tasks to one story
+many stories to many worklists
+many tasks to many worklists
+many stories/tasks to many worklists
+
+So a task has a story id. the other objects have separate tables that track
+which are mapped to which

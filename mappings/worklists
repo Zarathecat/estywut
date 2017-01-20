@@ -1,0 +1,15 @@
+#currently unused; having only 3 entities means we can put the mappings in
+# just one file.
+
+worklist_01:
+    - stories:
+        - 01
+        - 02
+        - 03
+
+# if we wanted to put tasks in directly:
+
+worklist_02:
+    - tasks:
+        - 01
+        - 02

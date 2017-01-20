@@ -1,0 +1,25 @@
+so to start with, I've gone for a fairly flat structure. things are grouped
+according to what they are, but at the same level, since that means we can 
+be flexible about how they relate. we currently describe mappings in a mappings
+dir. basically, we're making the common database, but a simplified plaintext
+version.
+
+This does mean that the relations between things are not immediately
+human-readable by looking at the repo. I think there is tension between having
+a simple + flexible directory structure and having human-readable content.
+
+doing things this way means issues can just be in an 'issues' dir of the main
+repo. we could then configure who can *edit* the different things in it by
+having rules on who can access which directories within that. I'm not sure
+how we do it for the mappings, yet (but currently the filenames include names
+of affected entities, so maybe we would match on those). I don't yet know
+who would have permission to say 'this task helps fulfill this requirement' etc.
+
+we can change it later, anyway. it would be possible to have something like
+'requirement_ids:' as a field in the task itself; it's just a bit neater
+to keep objects in one place and their relations to each other in another.
+
+I've included a 'created_at' field since I don't believe unix keeps track of
+this. it might not be necessary since the file will be tracked in git anyway,
+so there will be a record of when it first enters the repo. I'm not sure of
+the format for datetime there, anyway.
