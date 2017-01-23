@@ -1,4 +1,5 @@
-And these are tasks.
+And these are tasks. They are small, concrete units of work to meet
+some requirement(s).
 
 they currently use 'assignee id' to track assignees, which would require
 a mapping from assignee name to assignee id. this might not be necessary

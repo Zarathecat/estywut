@@ -8,7 +8,10 @@ This does mean that the relations between things are not immediately
 human-readable by looking at the repo. I think there is tension between having
 a simple + flexible directory structure and having human-readable content.
 We would need people to run a tool to group things, or we could make it run
-automatically with a git hook and output the result.
+automatically with a git hook and output the result. I really doubt humans
+will update the 'mappings' file by hand; when noting which issues relate to
+which, they'll want all the relevant info onscreen at once. I'm not sure
+how feasible this is without a real ui.
 
 doing things this way means issues can just be in an 'issues' dir of the main
 repo. we could then configure who can *edit* the different things in it by
@@ -25,3 +28,22 @@ I've included a 'created_at' field since I don't believe unix keeps track of
 this. it might not be necessary since the file will be tracked in git anyway,
 so there will be a record of when it first enters the repo. I'm not sure of
 the format for datetime there, anyway.
+
+Right now the id that matters is the one in the object's name. there's one
+in the file itself, but this can get out of sync and isn't (currently)
+interpreted anywhere. it would be best to either force them to be identical,
+or only have one. In which case my preference is for filenames since it's
+marginally easier to write a tool that parses them that way.
+
+merge conflicts for people working offline will be annoying, but it might
+not be that bad. aside from various workarounds to avoid generating
+them in the first place, (ie: don't worry about 
+sequential ids and use a time-and-date-based short random number generator
+to suggest an id for your file; all pick different primes and use multiples),
+if someone has to change the odd '04' to '05' in their commit, the world
+won't end. Complex  methods of working around this seem like more hassle than
+the problem itself. That said, the ids are fairly fluid and could be changed
+to be more randomizable; the current parser reads them as strings anyway.
+Give each member of the team a unique token (if your team's < 36 members,
+this would be *very* simple)  then they can preface any
+files they make with it, so it goes requirement_token_01. I don't know.

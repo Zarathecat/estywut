@@ -8,43 +8,61 @@ Similarly, we determine what type of thing a thing is by putting it in
 a directory for that thing, but we also include that in the filename.
 maybe we don't need both.
 
-I've used StoryBoard's naming for things because it's a mapping I'm very
-familiar with. For now, please read:
+We use the following naming:
 
-intents -> Intents (sometimes known as 'epics')
-stories -> Requirements (smaller goals)
-tasks -> task (specific work to meet goal)
+INTENTS are detailed through REQUIREMENTS are met by TASKS
 
-Historically, stories are used as bug-reports or feature requests,
-and so convey a small goal ('fix bug foo', 'support for x');
+There can be a many-to-many mapping between INTENTS and REQUIREMENTS.
+There can also be a many-to-many mapping between REQUIREMENTS and TASKS
 
-intents are used to group stories (goals) and/or tasks that fulfil the same,
-bigger goal (they are flexible and can be used for other things, but that's the
-bit that's relevant to us here);
+Because of this, and because our fields are fluid for now and might change,
+we use the thing in the middle, REQUIREMENTS as the
+point of entry to our mapping.
 
-tasks are some concrete unit of work, generally a specific code change to some
-repo;
+REQUIREMENT_01:
+  intents: intent_01, intent_02
+  tasks: task_01, task_02, task_03
 
 
+if we did it in a different order, the nesting would make things harder
+to parse. For example:
 
-projects (not used in our current mapping) are affected git repos, so roughly
-mean 'area of the codebase organised around some purpose'. They are associated
-with *tasks*, not with stories. Our setup currently only assumes one project
-(the repo in which the tracking information lives), which is why these are
-unused here.
+INTENT_01:
+  requirements: requirement_01:
+    tasks: task_01, task_02, task_03
 
-project groups (not used again) group different git repos relating to the same tool, eg: [bugtracker api, web interface for bugtracker, console interface for bugtracker, config scripts for bugtracker]. they don't do anything interesting;
-it's just for ease of browsing.
+INTENT_02:
+  requirements: requirement_01:
+    tasks: task_01, task_02, task_03
 
-boards (also unused) allow one to group intents according to the same
- meta goal, and move stories and tasks between intents.
+would convey the same info, but is more longwinded and less flat.
+So while things are fluid, I'm keeping the tool easy to code for.
 
-The requirementboard mapping goes:
+'But what about the case where some subset of a requirement's tasks
+fulfills another intent?',
+I hear nobody ask. Well, since you didn't ask, I'm going to tell you.
 
-many tasks to one requirement
-many stories to many intents
-many tasks to many intents
-many stories/tasks to many intents
+INTENT_03:
+  requirements: requirement_01:
+    tasks: task_01
 
-So a task has a requirement id. the other objects have separate tables that track
-which are mapped to which
+THIS IS WRONG. MAKE A DIFFERENT REQUIREMENT. EITHER A REQUIREMENT IS
+FULFILLED BY ITS TASKS OR IT ISN'T.
+
+Intent_03:
+  requirements: requirement_02:
+    tasks: task_01
+
+is how that'd actually look. So yeah, we group by requirements. so 
+the above would be:
+
+REQUIREMENT_01:
+  intents: 01, 02
+  tasks: 01, 02, 03
+
+REQUIREMENT_02:
+  intents: 03
+  tasks: 01
+
+I find it kinda weird that we're using task-tracking terms for bugtracking.
+I don't know who would use this tool to note a bug.

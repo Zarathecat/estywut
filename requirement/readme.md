@@ -1,1 +1,1 @@
-These would be 'requirements' in our mapping.
+These might sometimes be known as 'stories'.
