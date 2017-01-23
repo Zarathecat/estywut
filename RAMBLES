@@ -1,8 +1,11 @@
-so to start with, I've gone for a fairly flat structure. things are grouped
+This file is a rambling collection of development notes.
+
+To start with, I've gone for a fairly flat structure. Things are grouped
 according to what they are, but at the same level, since that means we can 
-be flexible about how they relate. we currently describe mappings in a mappings
-dir. basically, we're making the common database, but a simplified plaintext
-version.
+be flexible about how they relate if we want to adjust it later.
+We currently describe mappings in one file in the 'mappings' directory.
+Maybe it's something like a plaintext representation of a relational
+database; I don't know the theory there.
 
 This does mean that the relations between things are not immediately
 human-readable by looking at the repo. I think there is tension between having
@@ -11,39 +14,58 @@ We would need people to run a tool to group things, or we could make it run
 automatically with a git hook and output the result. I really doubt humans
 will update the 'mappings' file by hand; when noting which issues relate to
 which, they'll want all the relevant info onscreen at once. I'm not sure
-how feasible this is without a real ui.
+how feasible this is without a real ui. I've made a proof-of-concept
+API and console UI for this, to show how a utility could interact with the
+data to render it in a more human-readable form.
 
-doing things this way means issues can just be in an 'issues' dir of the main
-repo. we could then configure who can *edit* the different things in it by
-having rules on who can access which directories within that. I'm not sure
-how we do it for the mappings, yet (but currently the filenames include names
-of affected entities, so maybe we would match on those). I don't yet know
-who would have permission to say 'this task helps fulfill this requirement' etc.
+Doing things this way means issues can just be in an 'issues' dir of the main
+repo. They could be pushed to/from specific branches, then merged to master
+under certain conditions, eg: those prescribed by the git flow workflow.
+We can also configure who can *edit* the different things in the issues
+directory by
+having rules on who can access which directories within that.
+As the directories are named according to what they contain, 
+and they are not nested, it should be relatively straightforward to
+identify the 'intents' dir, the 'requirements' dir, etc, and configure
+permissions accordingly. I'm not sure
+how we do it for the mappings, yet. I don't yet know
+who would have permission to say 'this task helps fulfill this requirement', etc.
 
-we can change it later, anyway. it would be possible to have something like
-'requirement_ids:' as a field in the task itself; it's just a bit neater
-to keep objects in one place and their relations to each other in another.
+The structure should make it easier to change it later, anyway.
+It would be possible to have something like
+'requirement_ids:' as a field in the task itself;
+it's just a bit neater to keep objects in one place
+and their relations to each other in another while things are in flux.
 
-I've included a 'created_at' field since I don't believe unix keeps track of
-this. it might not be necessary since the file will be tracked in git anyway,
-so there will be a record of when it first enters the repo. I'm not sure of
-the format for datetime there, anyway.
+I've suggested including a 'created_at' field, 
+since I don't believe unix keeps track of this.
+It might not be necessary since the file will be tracked in git anyway,
+so there will at least be a record of when it first enters the repo.
+I'm not sure of the format for datetime there, anyway.
 
-Right now the id that matters is the one in the object's name. there's one
-in the file itself, but this can get out of sync and isn't (currently)
-interpreted anywhere. it would be best to either force them to be identical,
-or only have one. In which case my preference is for filenames since it's
+Right now, for the proof-of-concept CLI,
+the id that matters is the one in the object's filename.
+There's an id in the file itself, but this is just there as a suggestion of
+a way of tracking ids, so right now it can get out of sync with the 'real'
+one and isn't (currently) interpreted anywhere.
+It would be best to either force them to be identical, or only have one. 
+In which case my preference is for filenames since it's
 marginally easier to write a tool that parses them that way.
 
-merge conflicts for people working offline will be annoying, but it might
-not be that bad. aside from various workarounds to avoid generating
-them in the first place, (ie: don't worry about 
+Merge conflicts for people working offline will be annoying, but except
+in cases where many bug reports are rapidly sent from multiple sources,
+it's probably not that bad. 
+For small teams, there are various workarounds to avoid generating
+merge-conflicts in the first place, (ie: don't worry about 
 sequential ids and use a time-and-date-based short random number generator
 to suggest an id for your file; all pick different primes and use multiples),
 if someone has to change the odd '04' to '05' in their commit, the world
-won't end. Complex  methods of working around this seem like more hassle than
-the problem itself. That said, the ids are fairly fluid and could be changed
+won't end. Writing complex checking utility could be hassle than the problem itself.
+For a bigger volume of bug reports from non-technical users, sending them
+through some interface, this will be a much bigger issue.
+
+That said, the ids are fairly fluid and could be changed
 to be more randomizable; the current parser reads them as strings anyway.
-Give each member of the team a unique token (if your team's < 36 members,
-this would be *very* simple)  then they can preface any
-files they make with it, so it goes requirement_token_01. I don't know.
+Give each bug-submitter a unique token, then they can preface any
+intents/tasks/requirements they make with it, so it goes requirement_token_01.
+Maybe that's sufficient.

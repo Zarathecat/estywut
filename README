@@ -1,4 +1,7 @@
 A proof-of-concept/experiment re: issue tracking within a git repo.
+The goal is to make the simplest possible implementation, and
+see what goes wrong, to learn what we need from a better one.
+As this is so experimental, it is not suitable for production use.
 
 We currently give things both 'id' in the name and an 'id' field.
 they might not need the id field if the id is in the name. it's probably
