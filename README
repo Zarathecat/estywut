@@ -4,7 +4,7 @@ see what goes wrong, to learn what we need from a better one.
 As this is so experimental, it is not suitable for production use.
 
 We currently give things both 'id' in the name and an 'id' field.
-they might not need the id field if the id is in the name. it's probably
+they might not need the id field if the id is in the name. It's probably
 better to have it in the name to avoid merge conflicts.
 
 Similarly, we determine what type of thing a thing is by putting it in
@@ -42,8 +42,7 @@ would convey the same info, but is more longwinded and less flat.
 So while things are fluid, I'm keeping the tool easy to code for.
 
 'But what about the case where some subset of a requirement's tasks
-fulfills another intent?',
-I hear nobody ask. Well, since you didn't ask, I'm going to tell you.
+fulfills another intent?'
 
 INTENT_03:
   requirements: requirement_01:
@@ -67,5 +66,6 @@ REQUIREMENT_02:
   intents: 03
   tasks: 01
 
-I find it kinda weird that we're using task-tracking terms for bugtracking.
-I don't know who would use this tool to note a bug.
+I think there may be tension caused by using task-tracking terms for
+bugtracking.
+I don't yet know who would want to use a tool like this to note a bug.
