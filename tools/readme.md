@@ -1,6 +1,6 @@
 This is a python yaml parser for the content of this repo, so that
 it's easier to read info. There's currently a ropey CLI. Here is
-some sample output when given the arguments 'intent' and '01':
+some sample output when cli.py is run with the arguments 'intent' and '01':
 
 .........................................................................................
 .........................................................................................
